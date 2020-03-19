@@ -145,4 +145,4 @@ class Log_Collect:
 
 
 if __name__ == '__main__':
-    collecter = Log_Collect(sys.argv)
+    collecter = Log_Collect(li)
