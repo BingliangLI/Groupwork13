@@ -4,16 +4,6 @@
 # arguments is the tag as displayed by git tag and the number
 # of sublevels to be counted. If count is out of range for a
 # specific sublevel it will terminate the loop
-#
-# no proper header in this file
-# no legal/copyright ...OMG !
-#
-# things to cleanup:
-# restructure the code - use of functions
-# error handling ...where is the try..except ?
-# argument handling: you can do better right ?
-# documentation: once you understand it - fix the docs !
-# transform it into a class rather than just functions !
 
 
 """
@@ -32,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
 #__author__ = Bingliang Li, Bolin Cui, Yue Hu, Yuhe Zhang
 #__copyright__ = "Lanzhou Universaty, 2020"
-#__license__   = "GPL V2 or later"
+#__license__   = "MIT"
 #__version__   = 0.2
 
 
@@ -40,6 +30,8 @@ import sys, os, argparse
 from re import findall
 from subprocess import Popen, DEVNULL, PIPE
 
+
+# Setup arguments for git command
 parser = argparse.ArgumentParser()
 parser.add_argument("revision", help="git revision")
 parser.add_argument("range",type=int, help="input number")
@@ -97,7 +89,7 @@ class Log_Collect:
             if (li[2] == "c"):
                 cumulative = 1
             else:
-                print("Dont know what you mean with %s" % li[3])
+                print("Invalid argumment: %s" % li[3])
                 sys.exit(-1)
         rev_range = int(li[1])
         self.git(cumulative, rev_range)
@@ -107,26 +99,17 @@ class Log_Collect:
     # print("#sublevel commits %s stable fixes" % rev)
     # print("lv hour bugs") #tag for R data.frame
 
-    # base time of v4.1 and v4.4 as ref base
-    # fix this to extract the time of the base commit
-    # from git !
-    #
-    # hofrat@Debian:~/git/linux-stable$ git log -1 --pretty=format:"%ct" v4.4
-    # 1452466892
 
     def git(self, cumulative, rev_range):
         rev1 = li[0]
         v44 = 1452466892
         rev_range = li[1]
-        for sl in range(1,rev_range+1):
-            # It seems that from v4.* there aren't v*.*.* any more
-            # At least I can't get it
-            # So fix the code
+        for sl in range(1,rev_range + 1):
             if sl < int(rev1[-1]):
                 continue
             rev2 = self.rev[0:2] + "." + str(sl)
             print(rev2)
-        
+
             gitcnt = gitcntData(rev1 + "..." + rev2, "/home/hofrat/git/linux-stable")
             gittag = gittagData(rev2, "/home/hofrat/git/linux-stable")
             git_rev_list = subprocess.Popen(gitcnt, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, shell=True)
