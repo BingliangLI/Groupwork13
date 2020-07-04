@@ -1,16 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-__author__ = YueHu
-__coptright__ = Copyright 2020, YueHu
-__license__ = GPL
-__version__ = 0.2
-__maintainer__ = YueHu
-__email__ = "yhu18@lzu.edu.cn"
-__status__ = Done
-"""
-
 import os, re, sys, argparse,subprocess
 from subprocess import Popen,PIPE,DEVNULL
 from datetime import datetime as dt
